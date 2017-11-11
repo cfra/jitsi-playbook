@@ -1,4 +1,6 @@
 ---
-- hosts: dockerdrop
+- hosts: all
+  gather_facts: no # Fails if python is absend, done by bootstrap role
   roles:
+    - bootstrap
     - dockerdrop

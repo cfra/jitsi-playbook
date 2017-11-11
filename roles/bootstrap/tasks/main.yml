@@ -1,0 +1,9 @@
+- name: Make sure python is present (installs v2)
+  raw: "test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)"
+
+- name: Gather Facts, now that we have python
+  setup:
+
+- name: ensure apt cache is recent
+  apt:
+    update_cache: yes
