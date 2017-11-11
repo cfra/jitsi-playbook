@@ -1,0 +1,4 @@
+---
+- hosts: dockerdrop
+  roles:
+    - dockerdrop

@@ -1,0 +1,15 @@
+# This might be insufficient, see https://github.com/ansible/ansible-modules-core/issues/5237
+- name: Add repo key
+  apt_key:
+    url: 'https://download.docker.com/linux/ubuntu/gpg'
+    id: '9DC858229FC7DD38854AE2D88D81803C0EBFCD88'
+
+- name: Add docker ce repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_lsb.codename }} stable"
+
+- name: Install package
+  apt:
+    name: docker-ce
+    update_cache: yes
+    state: present
