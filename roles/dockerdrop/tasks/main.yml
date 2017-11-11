@@ -1,6 +1,3 @@
-- apt:
-    update_cache: yes
-
 - name: Remove old docker
   import_tasks: purge-old.yml
 
