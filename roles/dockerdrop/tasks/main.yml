@@ -1,12 +1,5 @@
 - name: Remove old docker
   import_tasks: purge-old.yml
 
-- name: Setup btrfs
-  import_role:
-    name: btrfs
-  vars:
-    src: /dev/sda
-    path: /var/lib/docker
-
 - name: Install docker CE
   import_tasks: docker_ce.yml
