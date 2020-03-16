@@ -1,0 +1,7 @@
+- name: Reload unit files
+  shell: systemctl daemon-reload
+
+- name: Restart jitsi
+  service:
+    name: jitsi
+    state: restarted

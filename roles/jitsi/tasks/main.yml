@@ -1,0 +1,99 @@
+- name: Ensure docker-compose and git are installed
+  apt:
+    pkg:
+      - docker-compose
+      - git-core
+
+- name: Get jitsi docker compose setup
+  git:
+    repo: https://github.com/jitsi/docker-jitsi-meet.git
+    dest: /opt/jitsi-meet
+    accept_hostkey: yes
+  notify: Restart jitsi
+
+- name: Put unit file for jitsi
+  copy:
+    src: jitsi.service
+    dest: /etc/systemd/system/jitsi.service
+  notify:
+    - Reload unit files
+    - Restart jitsi
+
+- name: Put jitsi config file from default, if it doesn't exist
+  copy:
+    remote_src: yes
+    src: /opt/jitsi-meet/env.example
+    dest: /opt/jitsi-meet/.env
+    force: no
+  notify:
+    - Restart jitsi
+
+- name: Update config dir
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^CONFIG='
+    line: 'CONFIG=/etc/jitsi-meet'
+  notify:
+    - Restart jitsi
+
+- name: Update HTTP port
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^HTTP_PORT='
+    line: 'HTTP_PORT=80'
+  notify:
+    - Restart jitsi
+
+- name: Update HTTPS port
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^HTTPS_PORT='
+    line: 'HTTPS_PORT=443'
+  notify:
+    - Restart jitsi
+
+- name: Set public URL
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^#?PUBLIC_URL='
+    line: 'PUBLIC_URL="https://{{ inventory_hostname }}"'
+  notify:
+    - Restart jitsi
+
+- name: Enable let's encrypt
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^#?ENABLE_LETSENCRYPT='
+    line: 'ENABLE_LETSENCRYPT=1'
+  notify:
+    - Restart jitsi
+
+- name: Configure let's encrypt domain
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^#?LETSENCRYPT_DOMAIN='
+    line: 'LETSENCRYPT_DOMAIN={{ inventory_hostname }}'
+  notify:
+    - Restart jitsi
+
+- name: Configure let's encrypt email
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^#?LETSENCRYPT_EMAIL='
+    line: 'LETSENCRYPT_EMAIL={{ letsencrypt_email }}'
+  notify:
+    - Restart jitsi
+
+- name: Enable HTTP redirect
+  lineinfile:
+    path: /opt/jitsi-meet/.env
+    regexp: '^#?ENABLE_HTTP_REDIRECT='
+    line: 'ENABLE_HTTP_REDIRECT=1'
+  notify:
+    - Restart jitsi
+
+- name: Start service
+  service:
+    name: jitsi.service
+    state: started
+    enabled: yes

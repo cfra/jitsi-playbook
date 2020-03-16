@@ -1,0 +1,12 @@
+[Unit]
+Requires=docker.service
+After=docker.service
+[Service]
+Type=simple
+WorkingDirectory=/opt/jitsi-meet
+ExecStart=/usr/bin/docker-compose up
+ExecStop=/usr/bin/docker-compose down
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
