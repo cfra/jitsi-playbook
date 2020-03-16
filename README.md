@@ -1,10 +1,10 @@
-# Ansible playbook for jitsi
+# Ansible playbook for Jitsi Meet
 
-This playbook sets up Jitsi so that it can be used to have video conferences via the Internet.
+This playbook sets up [Jitsi Meet](https://jitsi.org/jitsi-meet/) so that it can be used to have video conferences via the Internet.
 
 It has been tested on Debian Buster servers.
 
-It uses the official docker-compose setup.
+It uses the [official docker-compose setup](https://github.com/jitsi/docker-jitsi-meet).
 
 ## Configuration
 
@@ -30,4 +30,4 @@ It should complete without any errors.
 
 ## Usage
 
-Once all the containers have started up (this may take a minute or two), Jitsi should now be reachable at `https://meet.example.com`.
+Once all the containers have started up (this may take a minute or two), your new Jitsi Meet installation should now be reachable at `https://meet.example.com`.
