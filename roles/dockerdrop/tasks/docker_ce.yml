@@ -1,10 +1,9 @@
 - name: Install requirements for docker CE repo.
   apt:
-    name: "{{ item }}"
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - software-properties-common
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
 
 # This seems to be insufficient, see https://github.com/ansible/ansible-modules-core/issues/5237
 - name: Add repo key

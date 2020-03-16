@@ -1,9 +1,8 @@
 - name: Purge distro docker
   apt:
-    name: "{{ item }}"
     state: absent
     purge: yes
-  with_items:
-    - docker
-    - docker-engine
-    - docker.io
+    pkg:
+      - docker
+      - docker-engine
+      - docker.io
