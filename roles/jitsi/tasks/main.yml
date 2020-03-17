@@ -9,6 +9,7 @@
     repo: https://github.com/jitsi/docker-jitsi-meet.git
     dest: /opt/jitsi-meet
     accept_hostkey: yes
+    version: master
   notify: Restart jitsi
 
 - name: Put unit file for jitsi
