@@ -6,7 +6,7 @@
   register: python
 
 - name: Install Python
-  raw: "test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)"
+  raw: "apt -y update && apt install -y python-minimal"
   when: python.rc != 0
 
 - name: Gather Facts, now that we have python
