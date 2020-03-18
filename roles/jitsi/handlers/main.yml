@@ -1,7 +1,6 @@
-- name: Reload unit files
-  shell: systemctl daemon-reload
-
+---
 - name: Restart jitsi
-  service:
+  systemd:
     name: jitsi
     state: restarted
+    daemon_reload: true
