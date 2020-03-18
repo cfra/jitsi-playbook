@@ -1,5 +1,13 @@
-- name: Make sure python is present (installs v2)
-  raw: "test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)"
+---
+- name: Check for Python
+  raw: test -e /usr/bin/python
+  changed_when: false
+  failed_when: false
+  register: python
+
+- name: Install Python
+  raw: "apt -y update && apt install -y python-minimal"
+  when: python.rc != 0
 
 - name: Gather Facts, now that we have python
   setup:

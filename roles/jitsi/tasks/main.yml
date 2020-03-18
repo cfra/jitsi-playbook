@@ -1,3 +1,4 @@
+---
 - name: Ensure docker-compose and git are installed
   apt:
     pkg:
@@ -9,6 +10,7 @@
     repo: https://github.com/jitsi/docker-jitsi-meet.git
     dest: /opt/jitsi-meet
     accept_hostkey: yes
+    version: master
   notify: Restart jitsi
 
 - name: Put unit file for jitsi
@@ -16,7 +18,6 @@
     src: jitsi.service
     dest: /etc/systemd/system/jitsi.service
   notify:
-    - Reload unit files
     - Restart jitsi
 
 - name: Put jitsi config file from default, if it doesn't exist
