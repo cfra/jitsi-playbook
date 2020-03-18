@@ -1,3 +1,4 @@
+---
 - name: Ensure docker-compose and git are installed
   apt:
     pkg:
