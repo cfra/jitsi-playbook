@@ -1,9 +1,10 @@
 ---
-- name: Ensure docker-compose and git are installed
+- name: Ensure docker-compose, git and make are installed
   apt:
     pkg:
       - docker-compose
       - git-core
+      - make
 
 - name: Get jitsi docker compose setup
   git:
@@ -11,7 +12,15 @@
     dest: /opt/jitsi-meet
     accept_hostkey: yes
     version: master
-  notify: Restart jitsi
+  register: git
+
+- name: Build containers locally (registry containers are not always up-to-date)
+  command: make FORCE_REBUILD=1
+  args:
+    chdir: /opt/jitsi-meet
+  when: git.changed
+  notify:
+    - Restart jitsi
 
 - name: Put unit file for jitsi
   copy:
