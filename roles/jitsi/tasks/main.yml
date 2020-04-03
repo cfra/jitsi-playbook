@@ -66,7 +66,7 @@
   lineinfile:
     path: /opt/jitsi-meet/.env
     regexp: '^#?PUBLIC_URL='
-    line: 'PUBLIC_URL="https://{{ inventory_hostname }}"'
+    line: 'PUBLIC_URL=https://{{ inventory_hostname }}'
   notify:
     - Restart jitsi
 
